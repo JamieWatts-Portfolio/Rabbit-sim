@@ -118,6 +118,7 @@
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Priority.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Test\TestDesire.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\Literals.cs" />
+     <Compile Include="Assets\Content\Code Utilities\Internal\RuntimeDisabler.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\tools.cs" />
      <Compile Include="Assets\Content\Entities\Fox\Fox.cs" />
      <Compile Include="Assets\Content\Entities\Player\PlayerCameraController.cs" />
