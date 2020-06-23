@@ -1,0 +1,7 @@
+This project uses the following items from Poly (http://poly.google.com):
+
+Title: Simple Tilt Brush Scene
+Author: Yogoshimo 2.0
+URL: https://poly.google.com/view/cmbCP6VP0eR
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode

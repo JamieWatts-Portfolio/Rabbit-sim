@@ -1,0 +1,20 @@
+<Styles>
+  <Button Style="MetroButton" 
+          
+          BackgroundSprite="MainMenuButtonDefault" 
+          Hover-BackgroundSprite="MainMenuButtonClick"
+          Hightlight-BackgroundSprite="MainMenuButtonClick"
+          Pressed-BackgroundSprite="MainMenuButtonClick"
+          Width="128"
+          Height="64"
+          
+
+          FontSize="0"
+          FontColor="White" 
+          Pressed-BackgroundColor="White"
+          Hightlight-BackgroundColor="White"
+          Hover-BackgroundColor="White"
+          Pressed-FontColor="White"
+          />
+
+</Styles> 

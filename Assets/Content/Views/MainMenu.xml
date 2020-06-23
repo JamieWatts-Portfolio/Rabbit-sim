@@ -1,0 +1,8 @@
+<MainMenu xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
+    <Image Sprite="MainMenuPanel" Width="150" Height="256"/>
+    <Group Spacing="10">
+     <Button Style="MetroButton" Text="Play" Click="Play"/>
+     <Button Style="MetroButton" Text="Regen" Click="Regen" />
+     <Button Style="MetroButton" Text="Quit" Click="Quit"/>
+    </Group>
+</MainMenu>
