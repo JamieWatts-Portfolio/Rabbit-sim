@@ -21,6 +21,7 @@ namespace Delight
 
         public readonly AssetBundle Bundle1;
         public readonly AssetBundle Bundle2;
+        public readonly AssetBundle GPUVoronoiNoise;
 
         #endregion
 
@@ -30,9 +31,11 @@ namespace Delight
         {
             Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Remote };
             Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Remote };
+            GPUVoronoiNoise = new AssetBundle { Id = "GPUVoronoiNoise", StorageMode = StorageMode.Remote };
 
             Add(Bundle1);
             Add(Bundle2);
+            Add(GPUVoronoiNoise);
         }
 
         #endregion
@@ -462,6 +465,120 @@ namespace Delight
     public static partial class Assets
     {
         public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
+    }
+
+    #endregion
+
+    #region SceneAssets
+
+    /// <summary>
+    /// Manages a UnityEditor.SceneAsset object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class SceneAsset : AssetObject<UnityEditor.SceneAsset>
+    {
+        public static implicit operator SceneAsset(UnityEditor.SceneAsset unityObject)
+        {
+            return new SceneAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator SceneAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.SceneAssets[assetId];
+        }
+    }
+
+    /// <summary>
+    /// SceneAsset data provider. Contains references to all sceneassets in the project.
+    /// </summary>
+    public partial class SceneAssetData : DataProvider<SceneAsset>
+    {
+        #region Fields
+
+        public readonly SceneAsset VoronoNoise2D;
+        public readonly SceneAsset VoronoNoise3D;
+        public readonly SceneAsset VoronoNoise4D;
+
+        #endregion
+
+        #region Constructor
+
+        public SceneAssetData()
+        {
+            VoronoNoise2D = new SceneAsset { Id = "VoronoNoise2D", AssetBundleId = "GPUVoronoiNoise", RelativePath = "" };
+            VoronoNoise3D = new SceneAsset { Id = "VoronoNoise3D", AssetBundleId = "GPUVoronoiNoise", RelativePath = "" };
+            VoronoNoise4D = new SceneAsset { Id = "VoronoNoise4D", AssetBundleId = "GPUVoronoiNoise", RelativePath = "" };
+
+            Add(VoronoNoise2D);
+            Add(VoronoNoise3D);
+            Add(VoronoNoise4D);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static SceneAssetData SceneAssets = new SceneAssetData();
+    }
+
+    #endregion
+
+    #region TextAssets
+
+    /// <summary>
+    /// Manages a UnityEngine.TextAsset object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class TextAsset : AssetObject<UnityEngine.TextAsset>
+    {
+        public static implicit operator TextAsset(UnityEngine.TextAsset unityObject)
+        {
+            return new TextAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator TextAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.TextAssets[assetId];
+        }
+    }
+
+    /// <summary>
+    /// TextAsset data provider. Contains references to all textassets in the project.
+    /// </summary>
+    public partial class TextAssetData : DataProvider<TextAsset>
+    {
+        #region Fields
+
+        public readonly TextAsset BlocksGemGPUVoronoiNoise;
+
+        #endregion
+
+        #region Constructor
+
+        public TextAssetData()
+        {
+            BlocksGemGPUVoronoiNoise = new TextAsset { Id = "BlocksGemGPUVoronoiNoise", AssetBundleId = "GPUVoronoiNoise", RelativePath = "Shader/" };
+
+            Add(BlocksGemGPUVoronoiNoise);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static TextAssetData TextAssets = new TextAssetData();
     }
 
     #endregion

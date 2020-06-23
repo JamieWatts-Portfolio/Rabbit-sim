@@ -7470,6 +7470,30 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="Asset_DefaultAsset">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Materials" />
+      <xs:enumeration value="Fonts" />
+      <xs:enumeration value="Shaders" />
+      <xs:enumeration value="Sprites" />
+      <xs:enumeration value="Shader" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Asset_SceneAsset">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VoronoNoise2D" />
+      <xs:enumeration value="VoronoNoise3D" />
+      <xs:enumeration value="VoronoNoise4D" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Asset_TextAsset">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BlocksGemGPUVoronoiNoise" />
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="Asset_TextureAsset">
     <xs:restriction base="xs:string">
     </xs:restriction>

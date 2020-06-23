@@ -653,10 +653,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 67e7c8a0-f4e2-4ade-8c91-8eec2ff6c4af
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
-  projectName: Rabbit Simulation
-  organizationId: jefftheowl
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
