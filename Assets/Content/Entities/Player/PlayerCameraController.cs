@@ -1,40 +1,46 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using System;
 using utility;
-using Delight;
 
-
-[Serializable]
+/// <summary>Mono component adding a unity editor like free cam to a game object.</summary>
 [RequireComponent(typeof(Camera))]
 public class PlayerCameraController : MonoBehaviour
 {
-    #region Properties
+    #region Inspector Properties
     [Header("Movement")]
-    [SerializeField]
-    private float lookSpeedH = 2f;
+    /// <summary>WASD Camera movement speed exponent</summary>
+    [Tooltip("WASD Camera movement speed exponent")]
+    public float moveSpeed = 3f;
 
-    [SerializeField]
-    private float lookSpeedV = 2f;
-
-    [SerializeField]
+    /// <summary>Left Click Drag movement speed exponent</summary>
+    [Tooltip("Left Click Drag movement speed exponent")]
+    private float dragSpeed = 3f;
+    
+    /// <summary>Mousewheel zoom speed exponent</summary>
+    [Tooltip("Mousewheel zoom speed exponent")]
     private float zoomSpeed = 2f;
 
-    [SerializeField]
-    private float dragSpeed = 3f;
-
-    [SerializeField]
-    private float moveSpeed = 3f;
-
-    [SerializeField]
+    /// <summary>Right mouse button horizontal movement speed exponent</summary>
+    [Tooltip("Right mouse button horizontal movement speed exponent")]
+    private float lookSpeedH = 2f;
+    
+    /// <summary>Right mouse button vertical movement speed exponent</summary>
+    [Tooltip("Right mouse button vertical movement speed exponent")]
+    private float lookSpeedV = 2f;
+    #endregion
+    
+    #region Properties
+    /// <summary>Current Euler angle Y</summary>
+    /// gameObject.transform.rotation.y
     private float yaw = 0f;
 
-    [SerializeField]
+    /// <summary>Current Euler angle x</summary>
+    /// gameObject.transform.rotation.x
     private float pitch = 0f;
 
-    [SerializeField]
+    /// <summary>The camera component which this controller manages</summary>
+    /// Relies on [RequireComponent] to inherited, at monobehaviour start, a camera on the same object as this controller.
     private Camera connectedCamera = null;
 
     /// <summary> Transform to return to after entering menu mode</summary>
@@ -44,15 +50,12 @@ public class PlayerCameraController : MonoBehaviour
     /// As per the player camera prefab, a static child object is provided for this.
     private GameObject MenuTarget = null;
 
-    /// <summary>Player Cam object parenting the camera</summary>
-    private GameObject cameraParent = null;
-
     /// <summary>Determines if camera is in menu mode.</summary>
     /// True disables key input, and may invoke idle camera rotation in the future.
     public bool menu {get; private set;} = false;
 
     /// <summary>Argument hashtable for itween movement when focusing camera on an entity.</summary>
-    Hashtable rabbitFocusArgs = new Hashtable()
+    private Hashtable rabbitFocusArgs = new Hashtable()
                 {
                     { "orienttopath", true },
                     { "position", null },
@@ -60,7 +63,7 @@ public class PlayerCameraController : MonoBehaviour
                 };
     #endregion
 
-    #region monobehaviour
+    #region component
     /// <summary>Monobehaviour start</summary>
     /// Corrects initial rotation and validates component configuration
     private void Start()
@@ -75,17 +78,15 @@ public class PlayerCameraController : MonoBehaviour
     private void Update()
     {
         // IMPORTANT
-        // Updates compatabable with main menu must appear before here.
+        // Updates compatable with the camera whilst in menu mode must appear before here.
 
         if (menu) return;                           // If the camera is in menu mode, disallow keychecking.
-        CheckInput();
+        CheckInput();                               // Check for new  input,and handle.
     }
-    #endregion
 
+    /// <summary>Gets local references to components, and asserts the controller is correctly configured.</summary>
     private void validateConfifuration()
     {
-        cameraParent = GameObject.Find(Literals.OBJECT_PLAYER_CAM);
-        Assert.IsNotNull(cameraParent, "No camera parent found");
         connectedCamera = GetComponent<Camera>();
         MenuTarget = GameObject.Find(Literals.OBJECT_PLAYER_CAM_MENU);
         Assert.IsNotNull(MenuTarget, "No camera menu location");
@@ -159,6 +160,8 @@ public class PlayerCameraController : MonoBehaviour
         #endregion
     }
 
+    #endregion
+
     #region movement
     /// <summary>Moves the connected camera to the same position as the object parsed.</summary>
     /// <param name="target">Target object to move to<param>
@@ -174,7 +177,7 @@ public class PlayerCameraController : MonoBehaviour
     {
         rabbitFocusArgs.Remove("position");                             // update the arg hastable with target position
         rabbitFocusArgs.Add("position", position);
-        iTween.MoveTo(cameraParent, rabbitFocusArgs);                   // Parse hastable to itween to begin moving the camera.
+        iTween.MoveTo(gameObject, rabbitFocusArgs);                   // Parse hastable to itween to begin moving the camera.
     }
     #endregion
 
@@ -189,33 +192,43 @@ public class PlayerCameraController : MonoBehaviour
 
     /// <summary>Rotates the camera to look at the object parsed.</summary>
     /// <param name="target">Object to look at<param>
-    public void lookAt(Vector3 position) => iTween.LookTo(cameraParent, position, 2f);      // Look at position of target.
+    public void lookAt(Vector3 position) => iTween.LookTo(gameObject, position, 2f);      // Look at position of target.
     #endregion
 
     #region Menu
+    /// <summary>Moves the connected camera to it's menu position</summary>
+    /// Animates smooth motion over time using itwizzy utilities
     public void MenuPosition()
     {
-        menu = true;
-        prevTransform = tools.Clone(transform);         // Store playtime position
-        Hashtable args = new Hashtable();               // Define itwizzy keys
+        menu = true;                                    // Declare menu mode active
+        prevTransform = tools.Clone(transform);         // Store playtime position for returning
+
+        // Define itwizzy hastable keys
+        Hashtable args = new Hashtable();               
         args.Add("name", "PlayerCamToMenu");
         args.Add("position", MenuTarget.transform.position);
         args.Add("time", 1f);
-        args.Add("looktarget", new Vector3(1, cameraParent.transform.rotation.y, cameraParent.transform.rotation.z));
+        args.Add("looktarget", new Vector3(1, gameObject.transform.rotation.y, gameObject.transform.rotation.z));
         args.Add("looktime", 1f);
-        iTween.MoveTo(cameraParent, args);                      //Execute movement
+
+        iTween.MoveTo(gameObject, args);                      //Execute movement
     }
 
+    /// <summary>Moves the connected camera to it's play position</summary>
+    /// Animates smooth motion over time using itwizzy utilities
     public void PlayPosition()
     {
-        menu = false;
-        Hashtable args = new Hashtable();                        // Define itwizzy keys
+        menu = false;                                            // Declare menu mode inactive
+
+        // Define itwizzy keys for returning
+        Hashtable args = new Hashtable();                        
         args.Add("name", "PlayerCamToPlay");
         args.Add("position", prevTransform.position);
         args.Add("time", 1f);
         args.Add("looktime", 1f);
         args.Add("looktarget", new Vector3(prevTransform.rotation.x, prevTransform.rotation.y, prevTransform.rotation.z));
-        iTween.MoveTo(cameraParent, args);                      //Execute movement
+
+        iTween.MoveTo(gameObject, args);                      //Execute movement
     }
     #endregion
 }
