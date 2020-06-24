@@ -117,6 +117,7 @@
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Move.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Priority.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Test\TestDesire.cs" />
+     <Compile Include="Assets\Content\Code Utilities\Internal\GO Components\AutoRotator.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\Literals.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\RuntimeDisabler.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\tools.cs" />

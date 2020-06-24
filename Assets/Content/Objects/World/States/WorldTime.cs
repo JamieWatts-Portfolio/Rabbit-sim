@@ -1,7 +1,5 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace WorldGeneration {
     /// <summary> World time state machine behaviour </summary>
@@ -23,28 +21,19 @@ namespace WorldGeneration {
         /// true = night, false = day.
         public bool cycleState {get; private set;}
 
-        /// <summary>When true, indicates that the cycle state has just been changed.</summary> 
+        /// <summary>When true, indicates that the cycle state has just been changed.</summary>     
         private bool cycleStateChangeFlag;
-        
-        /// <summary> Seconds length for entire day night cycle </summary>
-        [Tooltip("Semilength of the entire day/night cycle")]
-        public float semiCycleTime = 10;
-
-        [Tooltip("")]
-        public float fadeTime = 10;
-
-        /// <summary> Stationary refference to the fog's previous colour for fade transitions </summary>
-        //public Color prevHue = new Color();
         #endregion
 
-        #region Unity Editor properties
-        //[Header("Skybox")]
-        //[Tooltip("Skybox material to be used during day cycles")]
-        //public Texture dayBox = null;
-        
-        //[Tooltip("Skybox material to be used during night cycles")]
-        //public Texture nightBox = null;
-        
+        #region Unity Editor properties    
+        [Header("Day Night Cycle")]
+        /// <summary> Seconds length for entire day night cycle </summary>
+        [Tooltip("Semilength of the entire day/night cycle (x * 2 = total cycle length)")]
+        public float semiCycleTime = 10;
+
+        [Tooltip("Time taked to fade between skybox materails at the begining of each semicycle")]
+        public float fadeTime = 10;
+
         [Header("Fog")]  
         [Tooltip("Fog color to be used during day cycles")]
         public Color dayFogHue = new Color();
@@ -54,30 +43,20 @@ namespace WorldGeneration {
         #endregion
 
         #region configuration
-        /// <summary> This state has just been entered in the world state machine. </summary>
         
+        /// <summary> This state has just been entered in the world state machine. </summary>
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-            //prevHue = currentFogColor();
-            ValidateConfiguration();
+            semiTime = semiCycleTime / 2;       //Start at mid day, not at the begining.
         } 
 
-        /// <summary>For debugging, asserts that unity editor values have been configured.</summary>
-        /// Due to the conditional nature of assertions, this method is not included in builds.
-        [Conditional("DEVELOPER_DEBUG")]
-        private void ValidateConfiguration(){
-            //prevHue = currentFogColor();
-            //Assert.IsNotNull(dayBox, "[World Time State Machine] Day sky box is not set in inspector");
-            //Assert.IsNotNull(nightBox, "[World Time State Machine] Day sky box is not set in inspector");
-        }
         #endregion
 
         #region update
-        //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-           UpdateDelta();
-           updateFade();
-           CheckBox(); 
+           UpdateDelta();       // Update world time based on delta time
+           updateFade();        // Check for and update fog and box fades
         }
 
         /// <summary> Update the current world time, based on delta time </summary>
@@ -89,17 +68,9 @@ namespace WorldGeneration {
 
         /// <summary>Triggers a state flip if semicycle time has surpassed</summary>
         private void CheckTime() { 
-            if (quadriTime > semiCycleTime / 2) resetQuadriTime();
-            cycleState = (semiTime > semiCycleTime) ? flipState() : cycleState;
+            if (quadriTime > semiCycleTime / 2) resetQuadriTime();              // If half of the semi cycle has passed, reset quadri time
+            cycleState = (semiTime > semiCycleTime) ? flipState() : cycleState; // If semi cycle is over, flip state. Update cycle state: if state changed, to new state else keep the same.
         }
-
-        /// <summary>Checks time state, and update skybox accordingly</summary>
-        private void CheckBox(){
-            if (cycleStateChangeFlag) {                     // if state has just changed
-                cycleStateChangeFlag = false;               // lower flag to indicate it's been handled
-            }
-        }
-
         #endregion
 
         #region utility functions
@@ -107,9 +78,9 @@ namespace WorldGeneration {
         /// <summary>Resets world time and flips cycle state</summary>
         /// Also raises state change flag
         private bool flipState(){
-            semiTime = 0f;
-            cycleStateChangeFlag = true;
-            return cycleState = !cycleState;
+            semiTime = 0f;                      // Clear semi time
+            cycleStateChangeFlag = true;        // Raise state change flag
+            return cycleState = !cycleState;    // invert cycle state and return it
         }
 
         /// <summary></summary>
@@ -130,19 +101,32 @@ namespace WorldGeneration {
         /// <summary>Current percentage of way through semi cycle</summary>
         private float semiCyclePercent() => (semiTime / semiCycleTime) * 100;
 
-        #endregion
-
+        /// <summary>Mathematical curve function to calulate state of fade based on time of day, and fade time</summary>
+        /// X axis = Time of cycle
+        /// Y axis = Float between 0 and 1 for lerping between skyboxes and fog colors.
+        /// 
+        /// 1             ______________________________________
+        /// :           /                                        \
+        /// :          /                                          \                                          
+        /// :         /                                            \
+        /// :        /                                              \
+        /// :       /                                                \ 
+        /// :      /                                                  \
+        /// 0     /                                                    \
+        ///      0------------------------------------------------------SemiCycleTime
         private float calcFade(float cycle){
             float point;
 
-            if (cycle < fadeTime) 
+            if (cycle < fadeTime)                                   // Leading curve
                 point = Mathf.Lerp(0, 1, cycle / fadeTime);
-            else if (cycle > semiCycleTime - fadeTime)
+            else if (cycle > semiCycleTime - fadeTime)              // Trailing curve
                 point = Mathf.Lerp(1, 0, 1 - cycle / fadeTime);
-            else 
-                point = 1f;
+            else                                                    // Flat top                                        
+                point = 1f; 
 
-            return cycleState ? point : 1 - point;
+            return cycleState ? point : 1 - point;                  // return with polarity modified based on cycle state;     day = flat is held low,      night = flat is held high.
         }
+
+        #endregion
     }
-}
+}   
