@@ -1754,12 +1754,13 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Did you remember to PULL before working?\n\nWorking with Commits:\n1.
     ALWAYS PULL BEFORE WORKING\n2. Figure out what you will be changing\n3. Fill
-    the title of you commit\n4. Fill description of what changes you actually made\n5.
-    Commit your changes (Local) \n6. Push your committed changes to origin(GitHub)\n\nWorking
-    with branches\n1. Determine purpose of branch (Feature to isolate to work on)\n2.
-    Ensure features being worked in will not conflict with, or modify files in use
-    by other branches\n3. Create branch\n4. Develop\n5. Merge to master when stable\n6.
-    Delete branch when no longer needed.\n"
+    the title of you commit\n4. Make changes\n5. !!!! SAVE THE SCENE !!!!!\n6. Fill
+    description of what changes you actually made\n7. Commit your changes (Local)
+    \n8. Push your committed changes to origin(GitHub)\n\nWorking with branches\n1.
+    Determine purpose of branch (Feature to isolate to work on)\n2. Ensure features
+    being worked in will not conflict with, or modify files in use by other branches\n3.
+    Create branch\n4. Develop\n5. Merge to master when stable\n6. Delete branch when
+    no longer needed.\n"
 --- !u!222 &1985135230
 CanvasRenderer:
   m_ObjectHideFlags: 0
