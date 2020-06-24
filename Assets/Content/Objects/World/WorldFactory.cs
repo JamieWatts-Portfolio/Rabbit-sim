@@ -8,6 +8,8 @@ using DevConsole;
 using System.Diagnostics;
 using CodeMonkey.Utils;
 
+
+// TODO tooltips on inspector visible properties
 namespace WorldGeneration
 {
     /// <summary>World generation mesh factory component</summary>
@@ -75,8 +77,6 @@ namespace WorldGeneration
         [Header("Other")]
         /// <summary>Height of cast rays. Must be higher than highest point made by perlin mesh</summary>
         public byte rayHeight = 30;
-
-
         #endregion
         #endregion
 
@@ -95,7 +95,7 @@ namespace WorldGeneration
         private void Configure()
         {
             if (triCount() > MAX_TRIS)
-            {                                                                // Check for triangle overflow.
+            {                                                                                           // Check for triangle overflow. (Mesh class has a limit of 65k triangles)
                 UnityEngine.Debug.Log("[World gen] Invalid configuration; Mesh tri overflow: x" + xSize + ", * z" + zSize + " * 6 > " + MAX_TRIS);
                 UnityEngine.Debug.Log("[World gen] Using default world size.");
                 xSize = DEFAULT_X; zSize = DEFAULT_Z;                                                   // Use default maximum size
@@ -142,13 +142,13 @@ namespace WorldGeneration
         #region mesh
         private Vector3[] generateVerticies()
         {
-            Vector3[] verts = new Vector3[(xSize + 1) * (zSize + 1)];       // Create temp array for verticies
+            Vector3[] verts = new Vector3[(xSize + 1) * (zSize + 1)];    // Create temp array for verticies
 
             for (int vert = 0, zItt = 0; zItt <= zSize; zItt++)         // Itterate over z,
                 for (int xItt = 0; xItt <= xSize; xItt++)
                 {              // Itterate over x,
                     float y = Mathf.PerlinNoise(xItt * 0.1f, zItt * 0.1f) * 2f;
-                    verts[vert] = new Vector3(xItt, y, zItt);             // Creating a vert at x, 0, y.
+                    verts[vert] = new Vector3(xItt, y, zItt);           // Creating a vert at x, 0, y.
                     vert++;                                             // increase itterator.
                 }
             return verts;
@@ -165,18 +165,18 @@ namespace WorldGeneration
                 for (int xitt = 0; xitt < xSize; xitt++)               // For every quad
                 {
 
-                    triangles[tris + 0] = vert + 0;                // Define left tri
+                    triangles[tris + 0] = vert + 0;                    // Define left tri
                     triangles[tris + 1] = vert + xSize + 1;
                     triangles[tris + 2] = vert + 1;
 
-                    triangles[tris + 3] = vert + 1;                // Define right tri
+                    triangles[tris + 3] = vert + 1;                    // Define right tri
                     triangles[tris + 4] = vert + xSize + 1;
                     triangles[tris + 5] = vert + xSize + 2;
 
                     vert++;                                            // Move to next quad
                     tris += 6;                                         // Count the values just added for this quad.
                 }
-                vert++;                                                    // Skip last quad (Quad spills from end of one line to the beginning of the next, causing tris to  
+                vert++;                                                // Skip last quad (Quad spills from end of one line to the beginning of the next, causing tris to  
             }                                                          // cover entire rows)
             return triangles;
         }
@@ -195,14 +195,13 @@ namespace WorldGeneration
 
         private GameObject generateStructures(){
             GameObject structureDescendant = new GameObject("Structures");
-            for (int currentStructure = 1; currentStructure <= maxStructures; currentStructure++)
-            {
-                Vector3 location = PickRandomLocation();                                 // Choose a location for a new cluster
-                if (vectorIsEmpty(location)) continue;                                   // skip if no location could be found.
-                GameObject structureObject = pickRandomStructure();
-                GameObject newStructure = Instantiate(structureObject, location, structureObject.transform.rotation); // Generate a new cluster of a random foliage
-                tools.setParent(newStructure, structureDescendant);                    // Assign as child of foliage.
-            }
+
+            foreach (GameObject structure in structures)                                            // Place every structure
+                placeObject(structure, structureDescendant);
+
+            for (int currentStructure = 1; currentStructure <= maxStructures; currentStructure++)   // Place random structures
+                placeObject(pickRandomStructure(), structureDescendant);
+            
             return structureDescendant;
         }
 
@@ -211,13 +210,10 @@ namespace WorldGeneration
          private GameObject generateFoliage()
         {
             GameObject foliageDescendant = new GameObject("Foliage");                             //Create a container object for all tree clusters
-            for (int currentCluster = 1; currentCluster <= maxFoliageClusters; currentCluster++)
-            {
-                Vector3 location = PickRandomLocation();                                 // Choose a location for a new cluster
-                if (vectorIsEmpty(location)) continue;                                   // skip if no location could be found.
-                GameObject newTreeCluster = generateCluster(pickRandomFoliage(), location); // Generate a new cluster of a random foliage
-                tools.setParent(newTreeCluster, foliageDescendant);                          // Assign as child of foliage.
-            }
+
+            for (int currentCluster = 1; currentCluster <= maxFoliageClusters; currentCluster++)  // place random foliage
+                placeObject(pickRandomFoliage(), foliageDescendant);
+   
             return foliageDescendant;
         }
 
@@ -225,14 +221,13 @@ namespace WorldGeneration
         /// Cluster is based on parsed origin
         private GameObject generateCluster(GameObject clusterObject, Vector3 origin)
         {
-            GameObject newCluster = new GameObject("Foliage Cluster");                      // Create a blank container for this cluster.
+            GameObject newCluster = new GameObject("Foliage Cluster");                       // Create a blank container for this cluster.
             for (int clusterSize = 0; clusterSize <= UnityEngine.Random.Range(1, maxClusterSize); clusterSize++)
             {
-                Vector3 childLocation = origin + (UtilsClass.GetRandomDir() * clusterSpread);
-                childLocation.y = getHeightAt(childLocation.x, childLocation.z);
-                if (childLocation.y == -999f) continue;
-                GameObject newClusterChild = Instantiate(clusterObject, childLocation, clusterObject.transform.rotation);
-                tools.setParent(newClusterChild, newCluster);                //Set as child of cluster.
+                Vector3 childLocation = origin + (UtilsClass.GetRandomDir() * clusterSpread); // Calculate location based on cluser origin, random direction, and cluster spread.
+                childLocation.y = getHeightAt(childLocation.x, childLocation.z);              // Raycast to get the height at the selected location 
+                if (childLocation.y == -999f) continue;                                       // skip if raycast missed, position was off the edge of the world OR world mesh was above ray height (See rayHeight property)
+                placeObject(clusterObject, childLocation, newCluster);                        // Place child in cluster
             }
             return newCluster;
         }
@@ -250,6 +245,16 @@ namespace WorldGeneration
             if (surface == null) return;
             surface.BuildNavMesh();
         }
+
+        private void placeObject(GameObject toPlace, GameObject parentDescenant) =>  placeObject(toPlace, PickRandomLocation(), parentDescenant);
+
+        private void placeObject(GameObject toPlace, Vector3 location,GameObject parentDescenant){
+            if (vectorIsEmpty(location)) return;                                // skip if no location could be found.
+            GameObject newObject = Instantiate(toPlace, location, parentDescenant.transform.rotation); // Generate a new cluster of a random foliage
+            tools.setParent(newObject, parentDescenant);                            // Assign as child of foliage.
+        }
+
+
 
         /// <summary>Determines if a vector's position is blank<summary>
         /// true if all planes are 0.
