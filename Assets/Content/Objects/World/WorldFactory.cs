@@ -212,7 +212,7 @@ namespace WorldGeneration
             GameObject foliageDescendant = new GameObject("Foliage");                             //Create a container object for all tree clusters
 
             for (int currentCluster = 1; currentCluster <= maxFoliageClusters; currentCluster++)  // place random foliage
-                placeObject(pickRandomFoliage(), foliageDescendant);
+                tools.setParent(generateCluster(pickRandomFoliage(), PickRandomLocation()), foliageDescendant);
    
             return foliageDescendant;
         }
@@ -249,9 +249,8 @@ namespace WorldGeneration
         private void placeObject(GameObject toPlace, GameObject parentDescenant) =>  placeObject(toPlace, PickRandomLocation(), parentDescenant);
 
         private void placeObject(GameObject toPlace, Vector3 location,GameObject parentDescenant){
-            if (vectorIsEmpty(location)) return;                                // skip if no location could be found.
-            GameObject newObject = Instantiate(toPlace, location, parentDescenant.transform.rotation); // Generate a new cluster of a random foliage
-            tools.setParent(newObject, parentDescenant);                            // Assign as child of foliage.
+            GameObject newObject = Instantiate(toPlace, location, toPlace.transform.rotation); // generate new object
+            tools.setParent(newObject, parentDescenant);                                       // set it's parent
         }
 
 
