@@ -122,7 +122,6 @@ namespace WorldGeneration {
 
         /// <summary>Lerps fog colour torwards parsed colour based on world time</summary>
         private void updateFade() {
-            UnityEngine.Debug.Log(calcFade(semiTime));
             RenderSettings.skybox.SetFloat("_Blend", calcFade(semiTime));
             RenderSettings.fogColor = Color.Lerp(dayFogHue, nightFogHue, calcFade(semiTime)); // 
         } 

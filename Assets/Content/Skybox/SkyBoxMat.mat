@@ -109,7 +109,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Advancedd: 1
-    - _Blend: 0.98
+    - _Blend: 0.7203553
     - _BumpScale: 1
     - _Cubemapp: 1
     - _Cutoff: 0.5

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   semiTime: 0
   quadriTime: 0
-  semiCycleTime: 30
-  fadeTime: 10
+  semiCycleTime: 300
+  fadeTime: 60
   dayFogHue: {r: 0.41176474, g: 0.76470596, b: 0.98823535, a: 0}
   nightFogHue: {r: 0.30588236, g: 0.21568629, b: 0.4784314, a: 0}
 --- !u!1102 &-4877708238646703735
@@ -84,7 +84,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -4877708238646703735}
-    m_Position: {x: 320, y: -10, z: 0}
+    m_Position: {x: 310, y: 10, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 418201987045665651}
