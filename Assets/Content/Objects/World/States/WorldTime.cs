@@ -24,23 +24,26 @@ namespace WorldGeneration {
         public bool cycleState {get; private set;}
 
         /// <summary>When true, indicates that the cycle state has just been changed.</summary> 
-        public bool cycleStateChangeFlag;
+        private bool cycleStateChangeFlag;
         
         /// <summary> Seconds length for entire day night cycle </summary>
         [Tooltip("Semilength of the entire day/night cycle")]
         public float semiCycleTime = 10;
 
+        [Tooltip("")]
+        public float fadeTime = 10;
+
         /// <summary> Stationary refference to the fog's previous colour for fade transitions </summary>
-        public Color prevHue = new Color();
+        //public Color prevHue = new Color();
         #endregion
 
         #region Unity Editor properties
-        [Header("Skybox")]
-        [Tooltip("Skybox material to be used during day cycles")]
-        public Material dayBox = null;
+        //[Header("Skybox")]
+        //[Tooltip("Skybox material to be used during day cycles")]
+        //public Texture dayBox = null;
         
-        [Tooltip("Skybox material to be used during night cycles")]
-        public Material nightBox = null;
+        //[Tooltip("Skybox material to be used during night cycles")]
+        //public Texture nightBox = null;
         
         [Header("Fog")]  
         [Tooltip("Fog color to be used during day cycles")]
@@ -54,7 +57,7 @@ namespace WorldGeneration {
         /// <summary> This state has just been entered in the world state machine. </summary>
         
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-            prevHue = currentFogColor();
+            //prevHue = currentFogColor();
             ValidateConfiguration();
         } 
 
@@ -62,8 +65,9 @@ namespace WorldGeneration {
         /// Due to the conditional nature of assertions, this method is not included in builds.
         [Conditional("DEVELOPER_DEBUG")]
         private void ValidateConfiguration(){
-            Assert.IsNotNull(dayBox, "[World Time State Machine] Day sky box is not set in inspector");
-            Assert.IsNotNull(nightBox, "[World Time State Machine] Day sky box is not set in inspector");
+            //prevHue = currentFogColor();
+            //Assert.IsNotNull(dayBox, "[World Time State Machine] Day sky box is not set in inspector");
+            //Assert.IsNotNull(nightBox, "[World Time State Machine] Day sky box is not set in inspector");
         }
         #endregion
 
@@ -72,7 +76,7 @@ namespace WorldGeneration {
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
            UpdateDelta();
-           UpdateFog();
+           updateFade();
            CheckBox(); 
         }
 
@@ -93,19 +97,9 @@ namespace WorldGeneration {
         private void CheckBox(){
             if (cycleStateChangeFlag) {                     // if state has just changed
                 cycleStateChangeFlag = false;               // lower flag to indicate it's been handled
-                prevHue = nextFogColor();                   // Store fog colour for next transition 
-                RenderSettings.skybox = nextBox();          // Change the skybox to the box for the next semicycle.
             }
         }
 
-        // TODO test
-        /// <summary>Modifies fog colour over time to fade between states</summary>
-        private void UpdateFog(){
-            if (semiCyclePercent() <= 50f)      
-                fadeFog(currentFogColor());                                                 // If we're less than 50 percent of the way through the day, fade colour to current box colour
-            else 
-                fadeFog(nextFogColor());                                                    // Else begin fading to next box colour
-        }   
         #endregion
 
         #region utility functions
@@ -121,26 +115,35 @@ namespace WorldGeneration {
         /// <summary></summary>
         private void resetQuadriTime() {
             quadriTime = 0f;
-            if (!cycleStateChangeFlag) {
-               prevHue = currentFogColor();
-            }
+            //if (!cycleStateChangeFlag) {
+               //prevHue = currentFogColor();
+            //}
         } 
 
         /// <summary>Lerps fog colour torwards parsed colour based on world time</summary>
-        private void fadeFog(Color nextColor) => RenderSettings.fogColor = Color.Lerp(prevHue, nextColor, 1 / (semiCycleTime / (quadriTime * 2))); //
+        private void updateFade() {
+            UnityEngine.Debug.Log(calcFade(semiTime));
+            RenderSettings.skybox.SetFloat("_Blend", calcFade(semiTime));
+            RenderSettings.fogColor = Color.Lerp(dayFogHue, nightFogHue, calcFade(semiTime)); // 
+        } 
+
 
         /// <summary>Current percentage of way through semi cycle</summary>
         private float semiCyclePercent() => (semiTime / semiCycleTime) * 100;
 
-        /// <summary>Returns the skybox materal for the skybox in the next cycle state</summary>
-        private Material nextBox() => cycleState ? dayBox : nightBox ;
-
-        /// <summary>Returns the set hue for the current semicycle</summary>
-        private Color currentFogColor() => cycleState ? nightFogHue : dayFogHue;
-
-        /// <summary>Returns the set hue for the next semicycle</summary>
-        private Color nextFogColor() => !cycleState ? dayFogHue : nightFogHue;
-
         #endregion
+
+        private float calcFade(float cycle){
+            float point;
+
+            if (cycle < fadeTime) 
+                point = Mathf.Lerp(0, 1, cycle / fadeTime);
+            else if (cycle > semiCycleTime - fadeTime)
+                point = Mathf.Lerp(1, 0, 1 - cycle / fadeTime);
+            else 
+                point = 1f;
+
+            return cycleState ? point : 1 - point;
+        }
     }
 }
