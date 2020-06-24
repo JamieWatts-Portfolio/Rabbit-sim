@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 2bd8959f5fbd3644aa33af1a155fc147, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 9e780330c08fc4b4a96e708c093f83eb, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 183982701}
-  m_IndirectSpecularColor: {r: 0.239413, g: 0.7383001, b: 1.6404173, a: 1}
+  m_IndirectSpecularColor: {r: 0.32383153, g: 0.22750261, b: 0.41292644, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1075,7 +1075,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056324530}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 67a5d66c3e6ee499399bb8c63b9f8129, type: 2}
   m_CullingMode: 0
@@ -1372,9 +1372,10 @@ GameObject:
   - component: {fileID: 1260073602}
   - component: {fileID: 1260073604}
   - component: {fileID: 1260073603}
+  - component: {fileID: 1260073605}
   m_Layer: 0
   m_Name: Note
-  m_TagString: Untagged
+  m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1436,6 +1437,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260073601}
   m_CullTransparentMesh: 0
+--- !u!114 &1260073605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260073601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27f8b80349a5a496aa62209d9b0f4c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1436785762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3832670251262626939, guid: 9c107a58f536f4b1faf876fde7de8d9d,
@@ -1705,7 +1718,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -200, y: -200}
-  m_SizeDelta: {x: 200, y: 400}
+  m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1985135229
 MonoBehaviour:
