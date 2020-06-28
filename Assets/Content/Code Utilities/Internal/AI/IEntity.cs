@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Assertions;
 using CodeMonkey.Utils;
 
 
@@ -33,7 +34,7 @@ namespace AI {
         /// Multiplier for sense
         /// <c>sence = base sense * sense modifyer<c>
         public int senseMod {get; set;}
-
+        
         /// <summary>Moves the parent entity is a random direction</summary>
         /// Overrides any exsisting destination
         /// <param name="scale">Scale exponent. Random movement is scaled by this.</param>
@@ -55,6 +56,15 @@ namespace AI {
         public int baseHealth;
         #endregion   
 
+        #region public static methods
 
+        private static readonly string IENTITY_ASSERSION_FAILIURE = "[IENTITY] Implemented statemachine behaviour requires IEntity, but none was located!";
+        public static IEntity getAnimatorIEntity(Animator animator) {
+            IEntity super = animator.gameObject.GetComponent<IEntity>();
+            if (super == null) {Debug.LogError(IENTITY_ASSERSION_FAILIURE); Assert.IsNotNull(super, IENTITY_ASSERSION_FAILIURE);}
+            return super;
+        }
+
+        #endregion
     }
 }

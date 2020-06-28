@@ -126,7 +126,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 1224819860687185458, guid: 2b788fa7b1c6f244eabcb1595d2e72a3, type: 3}
   childTag: Rabbit
-  untaggedDefault: 1
+  untaggedDefault: 0
   spawnChance: 20
   maxSpawnCount: 4
   minSpawnTime: 10

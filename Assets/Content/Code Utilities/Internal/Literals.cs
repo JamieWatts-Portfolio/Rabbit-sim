@@ -10,6 +10,8 @@ public static class Literals{
     #endregion
 
     #region objects
+    public static readonly string OBJECT_WORLD = "World";
+
     public static readonly string OBJECT_RABBIT = "Rabbit";
 
     public static readonly string OBJECT_PLAYER_CAM = "Player Cam";
@@ -25,6 +27,9 @@ public static class Literals{
 
     public static readonly string ST_PARAM_SATURATION = "Saturation";
 
+    public static readonly string ST_TRIG_IDLE_RETURN = "returnIdle";
+
+    public static readonly string ST_TRIG_DO_EXPLORE = "doExplore";
 
     #endregion 
 }

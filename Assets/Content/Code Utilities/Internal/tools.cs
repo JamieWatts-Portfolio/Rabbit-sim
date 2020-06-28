@@ -27,13 +27,13 @@ public class tools {
 /// <summary>Picks a random point within a transform</summary>
 /// Using position and scale, calculates a random location in 3d space.
 /// <param name = "bounds">spacial transform to use in creating a point.</param>
-/// <param name = "ignoreY">If true, Y will be 0.</param>
+/// <param name = "ignoreY">If true, Y will be 0.</param> //TODO change ignore to raycast
 public static Vector3 randomInTransform(Transform bounds, bool ignoreY) {
-    Vector3 scale = bounds.localScale;
+    Vector3 scale = bounds.lossyScale;
 
-    Vector2 x = new Vector2(1 / scale.x, 1 * scale.x);
-    Vector2 y = ignoreY ? new Vector2(0,0) : new Vector2(1 / scale.y, 1 * scale.y);
-    Vector2 z = new Vector2(1 / scale.z, 1 * scale.z);
+    Vector2 x = new Vector2(bounds.position.x, 1 * scale.x);
+    Vector2 y = ignoreY ? new Vector2(0,0) : new Vector2(bounds.position.y, 1 * scale.y);
+    Vector2 z = new Vector2(bounds.position.z, 1 * scale.z);
     return random3(z,y,z);
 }
 

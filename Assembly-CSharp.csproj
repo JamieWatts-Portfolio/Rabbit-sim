@@ -123,7 +123,7 @@
      <Compile Include="Assets\Content\Code Utilities\Internal\tools.cs" />
      <Compile Include="Assets\Content\Entities\Fox\Fox.cs" />
      <Compile Include="Assets\Content\Entities\Player\PlayerCameraController.cs" />
-     <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\ExploreState.cs" />
+     <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\ExploreBehaviour.cs" />
      <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\FoodDesire.cs" />
      <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\IdleState.cs" />
      <Compile Include="Assets\Content\Entities\Rabbit\Rabbit.cs" />

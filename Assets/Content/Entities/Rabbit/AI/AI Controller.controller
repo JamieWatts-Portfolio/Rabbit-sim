@@ -176,7 +176,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -8604092494504494804}
-    m_Position: {x: 550, y: -40, z: 0}
+    m_Position: {x: 550, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3420074151143330522}
     m_Position: {x: 550, y: 260, z: 0}
@@ -188,24 +188,24 @@ AnimatorStateMachine:
     m_Position: {x: 550, y: 370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5645511829576066980}
-    m_Position: {x: 350, y: 190, z: 0}
+    m_Position: {x: 560, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2247588232298116765}
     m_Position: {x: 800, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5059102509464653544}
-    m_Position: {x: 810, y: -50, z: 0}
+    m_Position: {x: 800, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3429940455963887436}
-    m_Position: {x: 550, y: 100, z: 0}
+    m_Position: {x: 560, y: 100, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 280, y: -260, z: 0}
+  m_AnyStatePosition: {x: 40, y: -30, z: 0}
   m_EntryPosition: {x: 360, y: 100, z: 0}
-  m_ExitPosition: {x: 40, y: 20, z: 0}
+  m_ExitPosition: {x: 40, y: 0, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -3429940455963887436}
 --- !u!1101 &-6243729219491330043
@@ -407,7 +407,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: returnIdle
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3429940455963887436}
   m_Solo: 0
@@ -646,6 +649,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: ========= STATE TRIGGERS =========
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: returnIdle
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1027,7 +1036,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3220530572934948373}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 8540615912133990921}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1103,3 +1113,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6bd629506734605a4b809e60023793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8540615912133990921
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2075805aaac349e3b114abc56d663ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentEntity: {fileID: 0}
+  minInvestigateTime: 3
+  maxInvestigateTime: 10
+  investigateRadius: 2
+  investagatableTags: []
+  randomMovementDistanceTollerance: 2
+  pathingTimeout: 20
