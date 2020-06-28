@@ -23,5 +23,8 @@ public static class Literals{
 
     public static readonly string ST_PARAM_HUNGRY = "isHungry";
 
+    public static readonly string ST_PARAM_SATURATION = "Saturation";
+
+
     #endregion 
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using CodeMonkey.Utils;
 
 
 namespace AI {
@@ -9,7 +10,6 @@ namespace AI {
     public class IEntity : MonoBehaviour { 
 
         #region movement
-
         /// <summary>Inspector set nav mesh agent<summary>
         /// Basis for all ientity movement.
         [SerializeField] public NavMeshAgent navigation;
@@ -34,6 +34,15 @@ namespace AI {
         /// <c>sence = base sense * sense modifyer<c>
         public int senseMod {get; set;}
 
+        /// <summary>Moves the parent entity is a random direction</summary>
+        /// Overrides any exsisting destination
+        /// <param name="scale">Scale exponent. Random movement is scaled by this.</param>
+        public void MoveRandom(byte scale) => MoveRelative(UtilsClass.GetRandomDir() * scale);
+
+        /// <summary>Moves entity by <c>pos</c>, relative to it's current position</summary>
+        ///Overrides any exsisting destination
+        private void MoveRelative(Vector3 pos) => navigation.SetDestination(gameObject.transform.position + pos);
+
         #endregion movement
       
         /// <summary>Defines how close a rabbit must be to food to be able to eat it.</summary>
@@ -45,7 +54,7 @@ namespace AI {
         /// <summary>Base health</summary>
         public int baseHealth;
         #endregion   
+
+
     }
-
-
 }

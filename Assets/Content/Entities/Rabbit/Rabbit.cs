@@ -8,18 +8,6 @@ public class Rabbit : IEntity {
 
     #endregion
 
-    #region monobehaviour parenting
- 
-    /// <summary>As a lone parent, this class is responsible for updating child mono behaviours.</summary> 
-    public void Update(){
-    }
-
-     void Start(){
-   
-    }
-
-    #endregion
-
 
     /// <summary> Generates a vector for within the scene. </summary>
     /// Used when rabbit is idle for generic movement

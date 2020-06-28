@@ -105,7 +105,7 @@ Animator:
   m_GameObject: {fileID: 1224819860687185456}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a5869ef14cba24989b144836d122f0eb, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -124,9 +124,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1224819860687419922}
   - component: {fileID: -6018827215519121648}
-  - component: {fileID: 4048325056219985712}
   - component: {fileID: 7273370886274874767}
   - component: {fileID: 4279936953402606070}
+  - component: {fileID: 1385125221183719345}
   m_Layer: 9
   m_Name: Rabbit
   m_TagString: Rabbit
@@ -172,23 +172,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4048325056219985712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1224819860687185458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b16502bb62d747a9a05f71a6e489d13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  navigation: {fileID: -6018827215519121648}
-  baseStamina: 0
-  senseDistance: 0
-  baseMetabolism: 0
-  baseHealth: 0
 --- !u!54 &7273370886274874767
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -224,6 +207,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1385125221183719345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224819860687185458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9aac46aea4c843358d65d11ff1fd430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navigation: {fileID: -6018827215519121648}
+  baseStamina: 0
+  senseDistance: 0
+  baseMetabolism: 0
+  baseHealth: 0
 --- !u!1 &9186761698317566885
 GameObject:
   m_ObjectHideFlags: 0

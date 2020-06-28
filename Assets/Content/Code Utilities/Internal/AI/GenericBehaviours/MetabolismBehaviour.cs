@@ -34,7 +34,7 @@ public class MetabolismBehaviour : StateMachineBehaviour
         checkThreshold();
 
         animator.SetBool(Literals.ST_PARAM_HUNGRY, isHungry);       //Broadcast hungry state to statemachine.
-        Debug.Log("sat: " + saturation);
+        animator.SetFloat(Literals.ST_PARAM_SATURATION, saturation);
     }
 
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
