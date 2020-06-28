@@ -49,16 +49,22 @@ namespace WorldGeneration
         #endregion
         [Header("Spawn objects")]
         #region spawn properties
+
+        
         /// <summary>Editor set list of objects that can be instantiated as trees.</summary>
-        /// Trees are spawned in clusters, according to cluster properties.
+        [Tooltip("Trees are spawned in clusters, according to cluster properties.")]
         public List<GameObject> foliage = new List<GameObject>();
 
         /// <summary>Editor set list of objects that can be instantiated as structures.</summary>
-        /// structures are spawned as provided, alone.
+        [Tooltip("structures are spawned as provided, alone.")]
         public List<GameObject> structures = new List<GameObject>();
         
+        /// <summary> Treated same as structures, but every item will be placed in the world at least once. </summary>
+        [Tooltip("Treated same as structures, but every item will be placed in the world at least once.")]
+        public List<GameObject> assertedStructures = new List<GameObject>();
+
         /// <summary>Editor set list of objects that can be instantiated as entities</summary>
-        /// Entities are spawned after all world population to ensure the navmesh is ready for them.
+        [Tooltip("Entities are spawned after all world population to ensure the navmesh is ready for them.")]
         public List<GameObject> entities = new List<GameObject>();
 
         [Header("Cluster settings")]
@@ -196,7 +202,7 @@ namespace WorldGeneration
         private GameObject generateStructures(){
             GameObject structureDescendant = new GameObject("Structures");
 
-            foreach (GameObject structure in structures)                                            // Place every structure
+            foreach (GameObject structure in assertedStructures)                                    // Place every asserted structure
                 placeObject(structure, structureDescendant);
 
             for (int currentStructure = 1; currentStructure <= maxStructures; currentStructure++)   // Place random structures

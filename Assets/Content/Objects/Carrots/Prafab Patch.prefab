@@ -128,7 +128,7 @@ MonoBehaviour:
   childTag: Carrot
   untaggedDefault: 1
   spawnChance: 100
-  maxSpawnCount: 2
+  maxSpawnCount: 5
   minSpawnTime: 5
   minAttemptTime: 5
   randomPositionExponent: 2

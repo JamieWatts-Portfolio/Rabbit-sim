@@ -115,7 +115,7 @@ MonoBehaviour:
   - {fileID: 1469870653572051517, guid: 8893f4906edb51b4dbb4d5fbc7c6b244, type: 3}
   structures:
   - {fileID: 188894, guid: 815e4cd23e4eb2b42a8a426a7d8c8708, type: 3}
-  - {fileID: 1615844903827732393, guid: 5206b12270d824749a1911706561b876, type: 3}
+  - {fileID: 5732288427438010813, guid: be128279ace5b4a3cb3bbc72df76c901, type: 3}
   - {fileID: 6384363310918634122, guid: 5b090f9a1a86b4ed1b2239a6ce7b32fd, type: 3}
   - {fileID: 2450126831347334903, guid: 568c898c88a468f4d912fa9450fea2af, type: 3}
   - {fileID: 5088059294299247345, guid: 38fd2ab2a9aa3ef469e15d70f5f8f876, type: 3}
@@ -129,6 +129,9 @@ MonoBehaviour:
   - {fileID: 6605557065925144199, guid: d6c865947b8351442aeec03543a34648, type: 3}
   - {fileID: 6460430325516282013, guid: e405a9b3e1a4cd04e92a57129a38a4fb, type: 3}
   - {fileID: 7772392201797763654, guid: 9a08101f706ea5b4b8d6eaa47e4d84cb, type: 3}
+  assertedStructures:
+  - {fileID: 5732288427438010813, guid: be128279ace5b4a3cb3bbc72df76c901, type: 3}
+  - {fileID: 6384363310918634122, guid: 5b090f9a1a86b4ed1b2239a6ce7b32fd, type: 3}
   entities:
   - {fileID: 3595652323926376112, guid: f8089bc1cb02c460d857f32a2e0a181b, type: 3}
   - {fileID: 1224819860687185458, guid: 2b788fa7b1c6f244eabcb1595d2e72a3, type: 3}
