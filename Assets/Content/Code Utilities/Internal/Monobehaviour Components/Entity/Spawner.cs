@@ -127,19 +127,13 @@ namespace EntityMonocomponent {
                 return;  
             }    
             Spawn(Random.Range(1, maxSpawnCount));
-            ResetDelta();
+            lastSpawnAttempt = 0;
         }
 
         /// <summary>Updates delta time values</summary>
         private void UpdateDelta(){
             lastSpawnAttempt += Time.deltaTime;
             lastSpawnSuccess += Time.deltaTime;
-        }
-
-        /// <sumary>Resets delta values to 0</summary>
-        private void ResetDelta(){
-            lastSpawnAttempt = 0;
-            lastSpawnSuccess = 0;
         }
 
         /// <summary>Spawns <c>instantiable</c> at specified location.</summary>
@@ -153,6 +147,7 @@ namespace EntityMonocomponent {
                 Vector3 newPosition = Relatise(UPosition);                                              // Update position with object offset
 
                 GameObject newSpawn = Instantiate(getRandomPrefab(), newPosition , Quaternion.identity);// spawn new object as specified
+                lastSpawnSuccess = 0;
                 utility.tools.setParent(newSpawn, gameObject);                                          // set as child
                 if (childTag != "") newSpawn.tag = childTag;
             }

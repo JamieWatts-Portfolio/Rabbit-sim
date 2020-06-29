@@ -128,8 +128,8 @@ MonoBehaviour:
   childTag: Rabbit
   untaggedDefault: 0
   spawnChance: 20
-  maxSpawnCount: 4
-  minSpawnTime: 10
+  maxSpawnCount: 2
+  minSpawnTime: 5
   minAttemptTime: 2
   randomPositionExponent: 0
   xOffset: 0

@@ -201,7 +201,7 @@ public class PlayerCameraController : MonoBehaviour
     public void MenuPosition()
     {
         menu = true;                                    // Declare menu mode active
-        prevTransform = tools.Clone(transform);         // Store playtime position for returning
+        prevTransform = TransformData.CloneTransform(transform);         // Store playtime position for returning
 
         // Define itwizzy hastable keys
         Hashtable args = new Hashtable();               

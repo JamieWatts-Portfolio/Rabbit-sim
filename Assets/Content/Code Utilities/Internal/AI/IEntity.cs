@@ -8,6 +8,10 @@ namespace AI {
 
   
     /// <summary>Base entity value and interactions</summary>
+    [RequireComponent(typeof(MeshCollider))]
+    [RequireComponent(typeof(MeshFilter))]
+    [RequireComponent(typeof(MeshRenderer))]
+    [RequireComponent(typeof(Rigidbody))]
     public class IEntity : MonoBehaviour { 
 
         #region movement

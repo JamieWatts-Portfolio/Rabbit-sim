@@ -635,37 +635,37 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isHungry
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Saturation
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: ========= STATE TRIGGERS =========
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: returnIdle
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doExplore
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Metabolism
@@ -1127,8 +1127,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentEntity: {fileID: 0}
   minInvestigateTime: 3
-  maxInvestigateTime: 10
-  investigateRadius: 2
-  investagatableTags: []
-  randomMovementDistanceTollerance: 2
+  maxInvestigateTime: 30
+  maxPositionTimeout: 10
+  investigateRadius: 5
+  investagatableTags:
+  - Carrot
+  randomMovementDistanceTollerance: 0.1
   pathingTimeout: 20
+  animator: {fileID: 0}
+  isInvestigating: 0
+  isAtInvestigationArea: 0
+  isAtInvestigationPosition: 0
+  investigationPositionArrivalFlag: 0
+  areaInvestigationDelta: 0
+  totalInvestigationDelta: 0
+  positionTimeoutDelta: 0
+  investigationSatificationTime: 0

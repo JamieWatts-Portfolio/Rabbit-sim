@@ -218,8 +218,8 @@ namespace WorldGeneration
             GameObject foliageDescendant = new GameObject("Foliage");                             //Create a container object for all tree clusters
 
             for (int currentCluster = 1; currentCluster <= maxFoliageClusters; currentCluster++)  // place random foliage
-                tools.setParent(generateCluster(pickRandomFoliage(), PickRandomLocation()), foliageDescendant);
-   
+                tools.setParent(generateCluster(pickRandomFoliage(), tools.PickRandomLocation(collider, gameObject.transform, rayHeight)), foliageDescendant);
+
             return foliageDescendant;
         }
 
@@ -231,7 +231,7 @@ namespace WorldGeneration
             for (int clusterSize = 0; clusterSize <= UnityEngine.Random.Range(1, maxClusterSize); clusterSize++)
             {
                 Vector3 childLocation = origin + (UtilsClass.GetRandomDir() * clusterSpread); // Calculate location based on cluser origin, random direction, and cluster spread.
-                childLocation.y = getHeightAt(childLocation.x, childLocation.z);              // Raycast to get the height at the selected location 
+                childLocation.y = tools.getHeightAt(childLocation.x, childLocation.z, rayHeight, collider);              // Raycast to get the height at the selected location 
                 if (childLocation.y == -999f) continue;                                       // skip if raycast missed, position was off the edge of the world OR world mesh was above ray height (See rayHeight property)
                 placeObject(clusterObject, childLocation, newCluster);                        // Place child in cluster
             }
@@ -252,7 +252,7 @@ namespace WorldGeneration
             surface.BuildNavMesh();
         }
 
-        private void placeObject(GameObject toPlace, GameObject parentDescenant) =>  placeObject(toPlace, PickRandomLocation(), parentDescenant);
+        private void placeObject(GameObject toPlace, GameObject parentDescenant) =>  placeObject(toPlace, tools.PickRandomLocation(collider, gameObject.transform, rayHeight), parentDescenant);
 
         private void placeObject(GameObject toPlace, Vector3 location,GameObject parentDescenant){
             GameObject newObject = Instantiate(toPlace, location, toPlace.transform.rotation); // generate new object
@@ -283,41 +283,6 @@ namespace WorldGeneration
         private float calculateLocalArea() => xSize * zSize;
 
         private int triCount() => (int)calculateLocalArea() * 6;
-
-        /// <summary>Ray casts a random location on the mesh, and ray casts for mesh height.</summary>
-        /// <returns>A random location on the mesh, with correct height.</returns>
-        private Vector3 PickRandomLocation()
-        {
-            float x = PickPointOnAxis(filter.mesh.bounds.size.x, gameObject.transform.localScale.x);
-            float z = PickPointOnAxis(filter.mesh.bounds.size.z, gameObject.transform.localScale.z);
-            return new Vector3(x, getHeightAt(x, z), z);                                                          // Successful cast, return point
-        }
-
-        /// <summary>Ray casts to find mesh height at the specified x and y</summary>
-        private float getHeightAt(float x, float z)
-        {
-            UnityEngine.Debug.DrawRay(new Vector3(x, 20, z), -Vector3.up, Color.black, 100f);
-            Ray ray = new Ray(new Vector3(x, rayHeight, z), -Vector3.up);                  // Create a new ray at the specified location, at height, facing towards the ground.
-            int retry = 5;
-            while (retry >= 0)
-            {
-                if (!collider.Raycast(ray, out hit, 1000))                                 // Cast ray
-                {                               
-                    retry--;                                                               // Failed to hit mesh
-                    continue;                                                              // try again
-                }
-                return hit.point.y;
-            }
-            // UnityEngine.Debug.LogWarning("World generation ray cast failed to hit mesh after five attempts.");
-            return -999f;
-        }
-
-
-
-        /// <summary>Picks a random poin on an axis</summary>
-        /// calculates global size, and chooses a point.
-        /// Assumes centre is at local centre of axis.
-        private float PickPointOnAxis(float localsize, float localscale) => UnityEngine.Random.Range(0, tools.CalculateGlobalSize(localsize, localscale, false));
 
         #endregion
 
