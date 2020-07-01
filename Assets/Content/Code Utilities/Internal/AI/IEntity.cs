@@ -3,29 +3,29 @@ using UnityEngine.AI;
 using UnityEngine.Assertions;
 using CodeMonkey.Utils;
 
-
-namespace AI {
-
-  
-    /// <summary>Base entity value and interactions</summary>
+namespace AI
+{
+    /// <summary>Base entity values and interactions</summary>
     [RequireComponent(typeof(MeshCollider))]
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(MeshRenderer))]
     [RequireComponent(typeof(Rigidbody))]
-    public class IEntity : MonoBehaviour { 
-
+    [RequireComponent(typeof(Metabolism))]
+    public class IEntity : MonoBehaviour
+    {
+			
         #region movement
         /// <summary>Inspector set nav mesh agent<summary>
         /// Basis for all ientity movement.
         [SerializeField] public NavMeshAgent navigation;
 
         /// <summary>Base movement speet</summary>
-        public int baseSpeed {get; private set;} = 10;
+        public int baseSpeed { get; private set; } = 10;
 
         /// <summary>speed modifyer</summary>
         /// Multiplier for speed
         /// <c>speed = base speed * speed modifyer<c>
-        public int speedMod {get; set;} = 10;
+        public int speedMod { get; set; } = 10;
 
         /// <summary>Base stamina</summary>
         public int baseStamina;
@@ -37,8 +37,8 @@ namespace AI {
         /// <summary>sense modifyer</summary>
         /// Multiplier for sense
         /// <c>sence = base sense * sense modifyer<c>
-        public int senseMod {get; set;}
-        
+        public int senseMod { get; set; }
+
         /// <summary>Moves the parent entity is a random direction</summary>
         /// Overrides any exsisting destination
         /// <param name="scale">Scale exponent. Random movement is scaled by this.</param>
@@ -49,10 +49,14 @@ namespace AI {
         private void MoveRelative(Vector3 pos) => navigation.SetDestination(gameObject.transform.position + pos);
 
         #endregion movement
-      
+
+        #region Health and Hunger
+        /// <summary>Metabolism behaviour for this entity.</summary>
+        public Metabolism metabolism = null;
+
         /// <summary>Defines how close a rabbit must be to food to be able to eat it.</summary>
-            public readonly int EAT_DISTANCE = 3;
-        #region health
+        public readonly int EAT_DISTANCE = 3;
+
         /// <summary>Base speed for entities food consumption</summary>
         public int baseMetabolism;
 
@@ -60,13 +64,33 @@ namespace AI {
         public int baseHealth;
         #endregion   
 
-        #region public static methods
+        #region public utility methods
 
-        private static readonly string IENTITY_ASSERSION_FAILIURE = "[IENTITY] Implemented statemachine behaviour requires IEntity, but none was located!";
-        public static IEntity getAnimatorIEntity(Animator animator) {
-            IEntity super = animator.gameObject.GetComponent<IEntity>();
-            if (super == null) {Debug.LogError(IENTITY_ASSERSION_FAILIURE); Assert.IsNotNull(super, IENTITY_ASSERSION_FAILIURE);}
-            return super;
+        /// <summary>returns component of specified type from parent object of a statemachine</summary>
+        public static T getAIComponent<T>(Animator animator) => getAIComponent<T>(getIEntity(animator));
+
+        /// <summary>Returns component of specified type from this entity instance.</summary>
+        public T getAIComponent<T>() => getAIComponent<T>(this);
+
+		/// <summary>Returns IEntity component from an monocomp's parnent object.</summary>
+        public static IEntity getIEntity(Animator component) => getAIComponent<IEntity>(component);
+
+
+        private static readonly string IENTITY_ASSERSION_FAILIURE = "[IENTITY] An AI Component was requested, but no matching component was found!";
+		public static T getAIComponent<T>(IEntity IEntityInstance) {
+			T component = IEntityInstance.gameObject.GetComponent<T>();
+            if (component == null) Debug.LogError(IENTITY_ASSERSION_FAILIURE);
+            return component;
+		} 
+
+
+
+        #endregion
+
+        #region Monocomponent methods
+        public void Start()
+        {
+            metabolism = getAIComponent<Metabolism>();
         }
 
         #endregion

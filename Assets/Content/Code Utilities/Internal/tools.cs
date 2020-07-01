@@ -2,26 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-namespace utility{
-
-     public struct TransformData {
-     public Vector3 position;
-     public Quaternion rotation;
-     
-     public Vector3 localPosition;
-     public Vector3 localScale;
-     public Quaternion localRotation;
-     
-     public Transform parent;
- }
-
-public class tools {
-
-    public static Vector3 random3(Vector2 x, Vector2 y, Vector2 z){
-        float xRan = Random.Range(x.x, x.y);
-        float yRan = Random.Range(y.x, y.y);
-        float zRan = Random.Range(z.x, z.y);
-        return new Vector3(xRan,yRan,zRan);
+namespace utility
+{
 
     public struct TransformData
     {

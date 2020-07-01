@@ -84,7 +84,7 @@ namespace AI
         override public void OnStateEnter(Animator Animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             animator = Animator;                                              // Store reference to parenting statemachine
-            parentEntity = IEntity.getAnimatorIEntity(animator);              // If no IEntity was set, try to inherit it from the parent entity.
+            parentEntity = IEntity.getIEntity(animator);                      // If no IEntity was set, try to inherit it from the parent entity.
             BeginInvestigating();                                             // Attempt to begin an investigation
         }
 
@@ -150,31 +150,32 @@ namespace AI
             ResetDeltas();                                                                                             // Reset any exsisting delta time data
         }
 
-
-
+        /// <summary> Update investigation behaviour whilst currently investigating.</summary>
         public void UpdateInvestigation()
         {
-            /*
-                NOT AT AREA OF INTEREST
-            */
+
             if (!isInvestigating) CompleteInvestigation();                                                                          // Reject update call if we're not investigating.
             UpdateDeltas();                                                                                                         // Update investigation deltas since last update.  
-            if (!isAtInvestigationArea)
+            
+            /*
+                NOT AT AREA OF INTEREST
+            */                                                                                                    
+            if (!isAtInvestigationArea)                                                                                             // If not at AOI,                                                                                         
             {
                 isAtInvestigationArea = parentEntity.navigation.remainingDistance <= investigateRadius;                             // If within investigation area, raise at area flag.                     
                 if (totalInvestigationDelta > pathingTimeout) CompleteInvestigation();                                              // Pathing timed out, exit investigation.
-                areaInvestigationDelta = 0f;
-                return;                                                                                                             // Can't do investigation behaviours untill pathing to LOI is complete.
+                areaInvestigationDelta = 0f;                                                                                        // Pin area investigation time low untill we reach AOI
+                return;                                                                                                             // Can't do investigation behaviours untill pathing to AOI is complete.
             }
 
             /*
                 AT AREA OF INTEREST
             */
-            if (areaInvestigationDelta > investigationSatificationTime) CompleteInvestigation();                                     // If we've been at the AOI for long enough to satisfy the entity, complete the investigation.
+            if (areaInvestigationDelta > investigationSatificationTime) CompleteInvestigation();                                     // If we've been at the AOI for long enough to satisfy, complete the investigation.
             
-            if (parentEntity.navigation.remainingDistance < randomMovementDistanceTollerance || parentEntity.navigation.remainingDistance == Mathf.Infinity){ // If at investigation point,
-                    if (investigationPositionArrivalFlag) AtNewInvestigationPosition();                                           // Invoke just arrived if arrival flag is high
-                    if (isAtInvestigationPosition && stationaryPositionDelta < 0) EnterNewInvestigationPosition();                                                // If we've been at this position for long enough, move to a new one.
+            if (parentEntity.navigation.remainingDistance < randomMovementDistanceTollerance || parentEntity.navigation.remainingDistance == Mathf.Infinity){ // If at investigation point within AOI,
+                    if (investigationPositionArrivalFlag) AtNewInvestigationPosition();                                              // Invoke just arrived event if arrival trigger flag is high
+                    if (isAtInvestigationPosition && stationaryPositionDelta < 0) EnterNewInvestigationPosition();                   // If we've been at this position for long enough, move to a new one.
             }
         }
 

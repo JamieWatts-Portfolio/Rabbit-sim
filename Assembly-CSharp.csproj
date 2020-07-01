@@ -111,7 +111,7 @@
      <Compile Include="Assets\Content\Code Utilities\External\PolyToolkit\Scripts\PtAssetObject.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\AIController.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Desire.cs" />
-     <Compile Include="Assets\Content\Code Utilities\Internal\AI\GenericBehaviours\MetabolismBehaviour.cs" />
+     <Compile Include="Assets\Content\Code Utilities\Internal\AI\GenericBehaviours\Metabolism.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\IEntity.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Move.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Priority.cs" />
