@@ -45,7 +45,7 @@ namespace AI
         public float pathingTimeout = 5f; 
         #endregion
 
-        #region private
+        #region Private properties
         /// <summary> Local reference to the parenting animator for routinal usage </summary>
         private Animator animator = null;
 
@@ -91,7 +91,7 @@ namespace AI
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) => UpdateInvestigation();
         #endregion
 
-        #region investigation behaviour
+        #region Investigation behaviour
         /// <summary> Chooses and begins investigating something by random weight </summary>
         public void BeginInvestigating()
         {
@@ -147,7 +147,7 @@ namespace AI
             parentEntity.navigation.SetDestination(loactionOfInterest.position);                                       // Set entity's destination
             if (parentEntity.navigation.pathStatus == NavMeshPathStatus.PathInvalid) {CompleteInvestigation(); return;}// If there's no path to destination, exit state.
             investigationSatificationTime = Random.Range(minInvestigateTime, maxInvestigateTime);                      // Choose how long we'll investigate the AOI
-            ResetDeltas();                                                                                             // Reset any exsisting delta time data
+            ClearDeltas();                                                                                             // Reset any exsisting delta time data
         }
 
         /// <summary> Update investigation behaviour whilst currently investigating.</summary>
@@ -179,24 +179,30 @@ namespace AI
             }
         }
 
+        /// <summary> Sets and begins entity movement into a new investigation position, inside of the AOI</summary>
         private void EnterNewInvestigationPosition()
         {
-            isAtInvestigationPosition = false;
-            parentEntity.MoveRandom(investigateRadius);                                                                             // When ready go to new point to investigate.
-            investigationPositionArrivalFlag = true;
+            if (!isAtInvestigationArea) return;                                                                                       // Reject call if not at AOI.
+            isAtInvestigationPosition = false;                                                                                        // lower flag from previous position.                                                                                        
+            parentEntity.MoveRandom(investigateRadius);                                                                               // Pick a new random position in the AOI and begin movement to it.                                                                     
+            investigationPositionArrivalFlag = true;                                                                                  // Raise event flag. This will enable arrival event to be triggered.
         }
 
+        /// <summary> Arrived at new investivation position event. </summary>
         private void AtNewInvestigationPosition(){
-                isAtInvestigationPosition = true;
+                if (!investigationPositionArrivalFlag) return;                                                                         // Reject event if not at investigation position.
+
+                isAtInvestigationPosition = true;                                                                                      // Reset IPOS flags
                 investigationPositionArrivalFlag = false;
+                
                 stationaryPositionDelta = Random.Range(0, maxPositionTimeout);
-                iTween.LookTo(parentEntity.gameObject, loactionOfInterest.position, 0.5f);                                            // Once at new position, look at it interest
+                iTween.LookTo(parentEntity.gameObject, loactionOfInterest.position, 0.5f);                                            // Once at new position, turn to look at it interest
         }
 
         /// <summary>Clears investigation data, prevents further updates, invokes idle state</summary>
         private void CompleteInvestigation()
         {
-            ResetDeltas();                                    // Clear investigation data
+            ClearDeltas();                                    // Clear investigation data
             isAtInvestigationArea = false;
             isInvestigating = false;                          // Clear investigating flag to stop any update attempts
             animator.SetTrigger(Literals.ST_TRIG_IDLE_RETURN);// Invoke statemachine to return to idle state.
@@ -205,14 +211,17 @@ namespace AI
         #endregion
 
         #region Utility
-        public void ResetDeltas()
+        
+        /// Sets all investigation behaviour delta's to 0f.
+        private void ClearDeltas()
         {
             stationaryPositionDelta = 0f;
             areaInvestigationDelta = 0f;
             totalInvestigationDelta = 0f;
         }
 
-        public void UpdateDeltas()
+        /// Updates investigation delta times with time since last frame.
+        private void UpdateDeltas()
         {
             stationaryPositionDelta -= Time.deltaTime;
             totalInvestigationDelta += Time.deltaTime;
