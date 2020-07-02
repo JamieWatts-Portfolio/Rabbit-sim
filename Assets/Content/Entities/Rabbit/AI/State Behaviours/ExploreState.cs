@@ -1,19 +1,17 @@
-﻿using System.Collections;
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Assertions;
-using AI;
 using utility;
 
 namespace AI
-{
+{   
     /// <summary>Exploritory entity statemachine component</summary>
     /// Curiously explores an area of interest from different angles.
     /// Areas of interest may be random objects, specific tags, parent object, or a random vector.
     /// Once finished exploring one area, state exits.
     /// Failiure to start or complete exploring area also invokes state exit.
-    public class ExploreBehaviour : StateMachineBehaviour
+    public class ExploreState : StateMachineBehaviour
     {
         #region Inspector
         [Header("Exploritory behaviour")]

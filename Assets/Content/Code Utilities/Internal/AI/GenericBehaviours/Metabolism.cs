@@ -25,10 +25,10 @@ using UnityEngine;
         public float hungerThreshold = 60;
 
         /// <summary>Is the entity currently hungry</summary>
-        private bool isHungry;
+        public bool isHungry {get; private set;}
 
         /// <summary>How much the saturation is decreased every frame</summary>
-    public float metabolismRate = 0.01f;
+    	public float metabolismRate = 0.01f;
     
         private void start() => checkConfiguration();
 
@@ -52,6 +52,11 @@ using UnityEngine;
 
         /// <summary>Ensures that <param>value<param> is between <param>max<param> and <param>min<param></summary>
         /// <returns>returns value normalised to range</returns>
+		private float assertInRange(float value) => assertInRange(value, 0, maxSaturation); 
         private float assertInRange(float value, float max, float min) => (value > max) ? max : (value < min) ? 0 : value; 
+
+		/// <summary>Modifies saturation by parsed value. Asserts within range 0-maxSaturation.</summary>
+		/// Automatically updates isHungry.
+		public void modSaturation(float sat) { saturation = assertInRange(sat + saturation); checkThreshold();}
     }
 }

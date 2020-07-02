@@ -119,12 +119,13 @@
      <Compile Include="Assets\Content\Code Utilities\Internal\Literals.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\Monobehaviour Components\Entity\Spawner.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\Monobehaviour Components\Generic\AutoRotator.cs" />
+     <Compile Include="Assets\Content\Code Utilities\Internal\Monobehaviour Components\Generic\Edible.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\Monobehaviour Components\Generic\RuntimeDisabler.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\tools.cs" />
      <Compile Include="Assets\Content\Entities\Fox\Fox.cs" />
      <Compile Include="Assets\Content\Entities\Player\PlayerCameraController.cs" />
-     <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\ExploreBehaviour.cs" />
-     <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\FoodDesire.cs" />
+     <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\ExploreState.cs" />
+     <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\HuntingState.cs" />
      <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\IdleState.cs" />
      <Compile Include="Assets\Content\Entities\Rabbit\Rabbit.cs" />
      <Compile Include="Assets\Content\Objects\World\States\WorldTime.cs" />

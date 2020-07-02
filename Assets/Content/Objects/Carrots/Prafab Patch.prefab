@@ -131,7 +131,7 @@ MonoBehaviour:
   maxSpawnCount: 5
   minSpawnTime: 5
   minAttemptTime: 5
-  randomPositionExponent: 2
-  xOffset: 0
-  yOffset: -1
-  zOffset: 0
+  randomPositionExponent: 1
+  xOffset: 2
+  yOffset: -4
+  zOffset: 2

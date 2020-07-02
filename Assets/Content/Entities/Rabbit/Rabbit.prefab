@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: -6018827215519121648}
   - component: {fileID: 7273370886274874767}
   - component: {fileID: 4279936953402606070}
-  - component: {fileID: 1385125221183719345}
   - component: {fileID: 2795848230851443279}
   - component: {fileID: 1463080927109881137}
   - component: {fileID: 390927604701888732}
+  - component: {fileID: 1362117736090474755}
+  - component: {fileID: 8684367149621309968}
   m_Layer: 9
   m_Name: Rabbit
   m_TagString: Rabbit
@@ -95,23 +96,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1385125221183719345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1224819860687185458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9aac46aea4c843358d65d11ff1fd430, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  navigation: {fileID: -6018827215519121648}
-  baseStamina: 0
-  senseDistance: 0
-  baseMetabolism: 0
-  baseHealth: 0
 --- !u!64 &2795848230851443279
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -173,6 +157,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224819860687185458}
   m_Mesh: {fileID: 4300000, guid: fed3d5728cc51e5479ccab07c990a13b, type: 3}
+--- !u!114 &1362117736090474755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224819860687185458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220df255c46824896ac5d5910c78ad94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saturation: 100
+  maxSaturation: 100
+  hungerThreshold: 60
+  metabolismRate: 0.01
+--- !u!114 &8684367149621309968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224819860687185458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9aac46aea4c843358d65d11ff1fd430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navigation: {fileID: -6018827215519121648}
+  baseStamina: 0
+  senseDistance: 0
+  metabolism: {fileID: 0}
+  baseMetabolism: 0
+  baseHealth: 0
 --- !u!1 &9186761698317566885
 GameObject:
   m_ObjectHideFlags: 0

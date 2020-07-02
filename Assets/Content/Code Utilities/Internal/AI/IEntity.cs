@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Assertions;
 using CodeMonkey.Utils;
+using System.Diagnostics;
 
 namespace AI
 {
@@ -54,9 +54,6 @@ namespace AI
         /// <summary>Metabolism behaviour for this entity.</summary>
         public Metabolism metabolism = null;
 
-        /// <summary>Defines how close a rabbit must be to food to be able to eat it.</summary>
-        public readonly int EAT_DISTANCE = 3;
-
         /// <summary>Base speed for entities food consumption</summary>
         public int baseMetabolism;
 
@@ -67,24 +64,20 @@ namespace AI
         #region public utility methods
 
         /// <summary>returns component of specified type from parent object of a statemachine</summary>
-        public static T getAIComponent<T>(Animator animator) => getAIComponent<T>(getIEntity(animator));
+        public static T getAIComponent<T>(Animator animator) => getAIComponent<T>(animator.gameObject);
 
         /// <summary>Returns component of specified type from this entity instance.</summary>
-        public T getAIComponent<T>() => getAIComponent<T>(this);
+        public T getAIComponent<T>() => getAIComponent<T>(gameObject);
 
 		/// <summary>Returns IEntity component from an monocomp's parnent object.</summary>
         public static IEntity getIEntity(Animator component) => getAIComponent<IEntity>(component);
 
-
         private static readonly string IENTITY_ASSERSION_FAILIURE = "[IENTITY] An AI Component was requested, but no matching component was found!";
-		public static T getAIComponent<T>(IEntity IEntityInstance) {
+		public static T getAIComponent<T>(GameObject IEntityInstance) {
 			T component = IEntityInstance.gameObject.GetComponent<T>();
-            if (component == null) Debug.LogError(IENTITY_ASSERSION_FAILIURE);
+            if (component == null) {UnityEngine.Debug.LogError(IENTITY_ASSERSION_FAILIURE); Debugger.Break();}
             return component;
 		} 
-
-
-
         #endregion
 
         #region Monocomponent methods

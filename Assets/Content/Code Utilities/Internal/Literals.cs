@@ -31,5 +31,7 @@ public static class Literals{
 
     public static readonly string ST_TRIG_DO_EXPLORE = "doExplore";
 
+	public static readonly string ST_TRIG_DO_HUNT = "doHunt";
+
     #endregion 
 }

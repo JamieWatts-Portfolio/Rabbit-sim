@@ -149,7 +149,7 @@ namespace EntityMonocomponent {
                 GameObject newSpawn = Instantiate(getRandomPrefab(), newPosition , Quaternion.identity);// spawn new object as specified
                 lastSpawnSuccess = 0;
                 utility.tools.setParent(newSpawn, gameObject);                                          // set as child
-                if (childTag != "") newSpawn.tag = childTag;
+                newSpawn.tag = childTag;
             }
         }
         #endregion
