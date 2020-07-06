@@ -52,7 +52,7 @@ using UnityEngine;
 
         /// <summary>Ensures that <param>value<param> is between <param>max<param> and <param>min<param></summary>
         /// <returns>returns value normalised to range</returns>
-		private float assertInRange(float value) => assertInRange(value, 0, maxSaturation); 
+		private float assertInRange(float value) => assertInRange(value, maxSaturation, 0); 
         private float assertInRange(float value, float max, float min) => (value > max) ? max : (value < min) ? 0 : value; 
 
 		/// <summary>Modifies saturation by parsed value. Asserts within range 0-maxSaturation.</summary>
