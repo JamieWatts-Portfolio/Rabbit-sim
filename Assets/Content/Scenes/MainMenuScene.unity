@@ -835,7 +835,7 @@ PrefabInstance:
     - target: {fileID: 224059926084638860, guid: df268274c31434315bb65640378306eb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1480.1462
+      value: 1535.8853
       objectReference: {fileID: 0}
     - target: {fileID: 224059926084638860, guid: df268274c31434315bb65640378306eb,
         type: 3}
@@ -915,12 +915,12 @@ PrefabInstance:
     - target: {fileID: 224387922264932778, guid: df268274c31434315bb65640378306eb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000026226044
+      value: -0.00006484985
       objectReference: {fileID: 0}
     - target: {fileID: 224387922264932778, guid: df268274c31434315bb65640378306eb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00001859665
+      value: -0.0000076293945
       objectReference: {fileID: 0}
     - target: {fileID: 224387922264932778, guid: df268274c31434315bb65640378306eb,
         type: 3}
@@ -1327,6 +1327,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2715485003868508686, guid: 9de2ebee42ab447f7b5dbc91bf871114,
         type: 3}
+      propertyPath: assertedStructures.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2715485003868508686, guid: 9de2ebee42ab447f7b5dbc91bf871114,
+        type: 3}
       propertyPath: maxClusterSize
       value: 20
       objectReference: {fileID: 0}
@@ -1407,6 +1412,12 @@ PrefabInstance:
       propertyPath: structures.Array.data[1]
       value: 
       objectReference: {fileID: 5732288427438010813, guid: be128279ace5b4a3cb3bbc72df76c901,
+        type: 3}
+    - target: {fileID: 2715485003868508686, guid: 9de2ebee42ab447f7b5dbc91bf871114,
+        type: 3}
+      propertyPath: assertedStructures.Array.data[2]
+      value: 
+      objectReference: {fileID: 5732288427438010813, guid: b7e9e61b2b23b45c1a24ef4c5c9d565f,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9de2ebee42ab447f7b5dbc91bf871114, type: 3}

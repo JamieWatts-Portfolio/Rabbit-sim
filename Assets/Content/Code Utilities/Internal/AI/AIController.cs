@@ -35,20 +35,11 @@ public class AIController : MonoBehaviour {
     #endregion
 
 
-    /// <summary>Internal properties to aid this AI</summary>
-    #region properties
-
-    /// <summary>Movement controller for this ai to use</summary>
-    /// Set on monobehaviour.start
-    [HideInInspector] public Move moveController;
-    
-    #endregion
 
 
     public void Update(){
         if (!enabled) return;
         controls.entityDesires.update();
-        moveController.Update();
     }
 
     /// <summary>Create a new AI using monobehaviour<summary>
@@ -63,7 +54,6 @@ public class AIController : MonoBehaviour {
 
         // Setup properties
         controls.entityDesires.parent = this;
-        moveController = new Move(controls.NavigationAgent);       // Create a new movement controller for this entity, using the navigation mesh.
-    }
+	    }
     }
 }

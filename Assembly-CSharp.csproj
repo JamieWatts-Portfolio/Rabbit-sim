@@ -112,8 +112,8 @@
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\AIController.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Desire.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\GenericBehaviours\Metabolism.cs" />
+     <Compile Include="Assets\Content\Code Utilities\Internal\AI\GenericBehaviours\MetabolismBehaviour.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\IEntity.cs" />
-     <Compile Include="Assets\Content\Code Utilities\Internal\AI\Move.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Priority.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\AI\Test\TestDesire.cs" />
      <Compile Include="Assets\Content\Code Utilities\Internal\Literals.cs" />
@@ -127,6 +127,7 @@
      <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\ExploreState.cs" />
      <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\HuntingState.cs" />
      <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\IdleState.cs" />
+     <Compile Include="Assets\Content\Entities\Rabbit\AI\State Behaviours\MateSeekingState.cs" />
      <Compile Include="Assets\Content\Entities\Rabbit\Rabbit.cs" />
      <Compile Include="Assets\Content\Objects\World\States\WorldTime.cs" />
      <Compile Include="Assets\Content\Objects\World\WorldFactory.cs" />

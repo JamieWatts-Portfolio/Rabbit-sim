@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Diagnostics;
 
 namespace AI
 {
@@ -82,10 +81,20 @@ namespace AI
 		private void checkEat()
 		{
 			if (foodTarget == null) {exitState(); return; }															// There is no target, reject eat attempt.
-			updateDistance();																						// Figure out how far we are from the target
+			updateLocation();
 			if (!(distanceFromFoodTarget < eatDistance)) return;												    // If we're not close enough, reject call.
 			checkStuck();
-			eat();														// If we're close enough, eat it.
+			eat();																									// If we're close enough, eat it.
+		}
+
+		/// Updates values related to food target's positiion.
+		///   - updates target destination if food has moved, or target has been overriden.
+		///   - updates distance from food target value.
+		public void updateLocation(){
+			if (!foodTarget.transform.position.Equals(parent.navigation.destination)){		// If the navigation target does not match the food's position,
+				parent.navigation.SetDestination(foodTarget.transform.position);			// Update targer destination.
+			}
+			updateDistance();																						// Figure out how far we are from the target
 		}
 
 		public void updateDistance() {
