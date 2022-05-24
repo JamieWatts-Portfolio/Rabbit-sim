@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 183982701}
-  m_IndirectSpecularColor: {r: 0.2963603, g: 0.63222164, b: 0.9980249, a: 1}
+  m_IndirectSpecularColor: {r: 0.32469657, g: 0.21954757, b: 0.40206113, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -835,7 +835,7 @@ PrefabInstance:
     - target: {fileID: 224059926084638860, guid: df268274c31434315bb65640378306eb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1535.8853
+      value: 1249
       objectReference: {fileID: 0}
     - target: {fileID: 224059926084638860, guid: df268274c31434315bb65640378306eb,
         type: 3}
@@ -1074,6 +1074,39 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!218 &1056324532
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056324530}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 0}
+  m_TreeDistance: 1000
+  m_TreeBillboardDistance: 200
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 150
+  m_DetailObjectDistance: 160
+  m_DetailObjectDensity: 0.5
+  m_HeightmapPixelError: 1
+  m_SplatMapDistance: 1000
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 0
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 10650, guid: 0000000000000000f000000000000000, type: 0}
+  m_BakeLightProbesForTrees: 0
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ScaleInLightmap: 1
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 0
 --- !u!4 &1076278953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5962315118690845556, guid: 5e81d54adacf14d269df35f06959c672,
